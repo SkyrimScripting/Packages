@@ -41,6 +41,16 @@ target("My-SKSE-Plugin")
     add_packages("skyrim-commonlib")
 ```
 
+Or any of the other packages listed above:
+
+```lua
+add_requires("skyrim-commonlib-vr")
+
+target("My-SKSE-Plugin")
+    add_files("plugin.cpp")
+    add_packages("skyrim-commonlib-vr")
+```
+
 ### Xbyak Support
 
 To enable [xbyak](https://github.com/herumi/xbyak) support, enable the `xybak` option (available for any version):
@@ -65,11 +75,19 @@ add_requires("skyrim-commonlib")
 target("My-SKSE-Plugin")
     add_files("plugin.cpp")
     add_packages("skyrim-commonlib")
+
     add_rules("@skyrim-commonlib/plugin", {
         -- This will output to the following generated folder location:
         --  C:/Path/to/my/mods/My-SKSE-Plugin/SKSE/Plugins/My-SKSE-Plugin.dll
         mods_folder = "C:/Path/to/my/mods"
     })
+
+    -- Note: use the rule with a name matching the package that you are using:
+    -- add_rules("@skyrim-commonlib/plugin", {...
+    -- add_rules("@skyrim-commonlib-vr/plugin", {...
+    -- add_rules("@skyrim-commonlib-ae/plugin", {...
+    -- add_rules("@skyrim-commonlib-se/plugin", {...
+    -- add_rules("@skyrim-commonlib-vr/plugin", {...
 ```
 
 If you have multiple mods folders, you can specify them as a list:
@@ -81,7 +99,7 @@ target("My-SKSE-Plugin")
     add_files("plugin.cpp")
     add_packages("skyrim-commonlib")
     add_rules("@skyrim-commonlib/plugin", {
-        mod_folders = { "C:\...", "C:\..." }
+        mod_folders = { "C:/...", "C:/..." }
     })
 ```
 
