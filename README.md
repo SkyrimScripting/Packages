@@ -1,6 +1,6 @@
 # Skyrim Packages (`xmake` and `vcpkg`)
 
-> _Note: most packages are only available thru xmake at this time_
+> _Note: packages are only available thru xmake at this time_
 
 ## xmake
 
@@ -10,11 +10,14 @@ To use these xmake packages, add the following to your `xmake.lua` file:
 add_repositories("SkyrimScripting https://github.com/SkyrimScripting/Packages.git")
 ```
 
-## WIP
+## Packages
 
-_Currently, all of the non-CommonLib packages container here are a work in progress!_
-
-_Recommend against using them for now!_
+- `skyrim-commonlib`
+- `skyrim-commonlib-vr`
+- `skyrim-commonlib-ng`
+- `skyrim-commonlib-ae`
+- `skyrim-commonlib-se`
+- _Other packages in this repo are a work in progress and I wouldn't use them yet!_
 
 ## CommonLib
 
