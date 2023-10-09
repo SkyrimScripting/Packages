@@ -39,6 +39,10 @@ rule("plugin")
             target:add("defines", "SKSE_SUPPORT_XBYAK=1")
         end
 
+        local plugin_name = config.name or target:name()
+        local author_name = config.author or ""
+        local author_email = config.email or ""
+
         local version = semver.new(config.version or target:version() or "0.0.0")
         local version_string = string.format("%s.%s.%s", version:major(), version:minor(), version:patch())
 
@@ -101,17 +105,29 @@ rule("plugin")
                     end
                 end
 
-                file:print("#include <SKSE/SKSE.h>")
-                file:print("#include <REL/Relocation.h>\n")
+                file:print("#include <SKSEPluginInfo.h>")
+                file:print("")
                 file:print("using namespace std::literals;\n")
+                file:print("")
                 file:print("SKSEPluginInfo(")
                 file:print("    .Version = { %s, %s, %s, 0 },", version:major(), version:minor(), version:patch())
-                file:print("    .Name = \"%s\"sv,", config.name or target:name())
-                file:print("    .Author = \"%s\"sv,", config.author or "")
-                file:print("    .SupportEmail = \"%s\"sv,", config.email or "")
+                file:print("    .Name = \"%s\"sv,", plugin_name)
+                file:print("    .Author = \"%s\"sv,", author_name)
+                file:print("    .SupportEmail = \"%s\"sv,", author_email)
                 file:print("    .StructCompatibility = SKSE::StructCompatibility::%s,", struct_compat)
                 file:print("    .RuntimeCompatibility = SKSE::VersionIndependence::%s", runtime_compat)
                 file:print(")")
+                file:print("")
+                file:print("// For standard access from your SKSE plugin")
+                file:print("// These are functions for flexibility")
+                file:print("// Note: could also have these use NG's PluginDeclaration if desired")
+                file:print("namespace SKSEPluginInfo {")
+                file:print("    const char* GetPluginName() { return \"" .. plugin_name .. "\"; }")
+                file:print("    const char* GetAuthorName() { return \"" .. author_name .. "\"; }")
+                file:print("    const char* GetAuthorEmail() { return \"" .. author_email .. "\"; }")
+                file:print("    const REL::Version GetPluginVersion() { return REL::Version{" .. version:major() .. ", " .. version:minor() .. ", " .. version:patch() .. "}; }")
+                file:print("}")
+                file:print("")
                 file:close()
             end
         end, { dependfile = target:dependfile(plugin_file), files = project.allfiles()})

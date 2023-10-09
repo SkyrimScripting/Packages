@@ -16,7 +16,7 @@ package("skyrim-commonlib-ng")
     add_configs("ae", {description = "Enable runtime support for Skyrim AE", default = true, type = "boolean"})
     add_configs("vr", {description = "Enable runtime support for Skyrim VR", default = true, type = "boolean"})
 
-    add_deps("fmt", "rapidcsv")
+    add_deps("skse_plugin_info", "fmt", "rapidcsv")
     add_deps("spdlog", { configs = { header_only = false, fmt_external = true } })
 
     add_syslinks("version", "user32", "shell32", "ole32", "advapi32")
