@@ -24,7 +24,11 @@ rule("plugin")
         target:set("kind", "shared")
         target:set("arch", "x64")
 
-        local config = target:extraconf("rules", "@skyrim-commonlib-se/plugin")
+        local config = target:extraconf("rules", "@skyrim-commonlib-ae/plugin")
+
+        local plugin_name = config.name or target:name()
+        local author_name = config.author or ""
+        local author_email = config.email or ""
 
         local version = semver.new(config.version or target:version() or "0.0.0")
         local version_string = string.format("%s.%s.%s", version:major(), version:minor(), version:patch())
