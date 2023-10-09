@@ -1,0 +1,7 @@
+package("skse_plugin_info")
+    set_homepage("https://github.com/SkyrimScripting/PluginInfo")
+    set_description("Access an SKSE plugin's name and version.")
+    add_urls("https://github.com/SkyrimScripting/PluginInfo.git")
+    on_install(function (package)
+        os.cp("include", package:installdir())
+    end)
