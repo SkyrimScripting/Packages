@@ -24,7 +24,7 @@ rule("plugin")
         target:set("kind", "shared")
         target:set("arch", "x64")
 
-        local config = target:extraconf("rules", "@skyrim-commonlib-ae/plugin")
+        local config = target:extraconf("rules", "@skyrim-commonlib-se/plugin")
 
         local plugin_name = config.name or target:name()
         local author_name = config.author or ""

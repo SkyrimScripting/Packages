@@ -28,7 +28,7 @@ rule("plugin")
         target:add("cxxflags", "/permissive-", "/Zc:alignedNew", "/Zc:__cplusplus", "/Zc:forScope", "/Zc:ternary")
         target:add("cxxflags", "cl::/Zc:externConstexpr", "cl::/Zc:hiddenFriend", "cl::/Zc:preprocessor", "cl::/Zc:referenceBinding")
 
-        local config = target:extraconf("rules", "@skyrim-commonlib-ae/plugin")
+        local config = target:extraconf("rules", "@skyrim-commonlib-vr/plugin")
 
         local plugin_name = config.name or target:name()
         local author_name = config.author or ""
