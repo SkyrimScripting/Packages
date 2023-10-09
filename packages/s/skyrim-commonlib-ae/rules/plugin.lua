@@ -82,8 +82,6 @@ rule("plugin")
         depend.on_changed(function()
             local file = io.open(plugin_file, "w")
             if file then
-                file:print("#pragma once")
-                file:print("")
                 file:print("#include <SKSEPluginInfo.h>")
                 file:print("")
                 file:print("// For standard access from your SKSE plugin")
