@@ -28,6 +28,8 @@ rule("plugin")
         local config = target:extraconf("rules", "@skyrim-commonlib-ae/plugin")
 
         local plugin_name = config.name or target:name()
+        local author_name = config.author or ""
+        local author_email = config.email or ""
 
         local version = semver.new(config.version or target:version() or "0.0.0")
         local version_string = string.format("%s.%s.%s", version:major(), version:minor(), version:patch())
@@ -85,8 +87,11 @@ rule("plugin")
                 file:print("#include <SKSEPluginInfo.h>")
                 file:print("")
                 file:print("namespace SKSEPluginInfo {")
-                file:print("    constexpr const char* PluginName = \"" .. plugin_name .. "\";")
-                file:print("    constexpr REL::Version PluginVersion = { " .. version:major() .. ", " .. version:minor() .. ", " .. version:patch() .. " };")
+                file:print("    using namespace std::literals;")
+                file:print("    const std::string_view PluginName = \"" .. plugin_name .. "\"sv;")
+                file:print("    const std::string_view AuthorName = \"" .. author_name .. "\"sv;")
+                file:print("    const std::string_view AuthorEmail = \"" .. author_email .. "\"sv;")
+                file:print("    const REL::Version PluginVersion = { " .. version:major() .. ", " .. version:minor() .. ", " .. version:patch() .. " };")
                 file:print("}")
                 file:print("")
                 file:print("#include <SKSEPluginInfo/Extern/SKSEPlugin_Version.h>")
