@@ -10,11 +10,10 @@ vcpkg_cmake_configure(
 
 vcpkg_cmake_install()
 
-# Handle debug libraries (removing redundant .lib from debug build if it exists)
-if(EXISTS "${CURRENT_PACKAGES_DIR}/debug/lib/")
-    file(INSTALL "${CURRENT_PACKAGES_DIR}/debug/lib/" DESTINATION "${CURRENT_PACKAGES_DIR}/debug")
-    file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/lib")
-endif()
+file(INSTALL "${CURRENT_PACKAGES_DIR}/debug/skse_plugin_info_ng.lib" DESTINATION "${CURRENT_PACKAGES_DIR}/debug/lib")
+file(REMOVE "${CURRENT_PACKAGES_DIR}/debug/skse_plugin_info_ng.lib")
+
+file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/share")
 
 file(MAKE_DIRECTORY "${CURRENT_PACKAGES_DIR}/share/${PORT}")
 file(INSTALL "${SOURCE_PATH}/LICENSE" DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}" RENAME copyright)
