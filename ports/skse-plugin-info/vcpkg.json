@@ -1,0 +1,15 @@
+{
+  "name": "skse-plugin-info",
+  "version-string": "2023-10-09-e2b2976",
+  "description": "Standard header for SKSE plugin info",
+  "dependencies": [
+    {
+      "name": "vcpkg-cmake",
+      "host": true
+    },
+    {
+      "name": "vcpkg-cmake-config",
+      "host": true
+    }
+  ]
+}
