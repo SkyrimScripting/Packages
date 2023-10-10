@@ -1,0 +1,15 @@
+{
+  "name": "skse-plugin-info",
+  "version-string": "latest",
+  "description": "Standard header for SKSE plugin info",
+  "dependencies": [
+    {
+      "name": "vcpkg-cmake",
+      "host": true
+    },
+    {
+      "name": "vcpkg-cmake-config",
+      "host": true
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "default": {
+    "skse-plugin-info": {
+      "baseline": "latest",
+      "port-version": 0
+    }
+  }
+}
