@@ -3,6 +3,10 @@
     "skse-plugin-info": {
       "baseline": "2023-10-09-e2b2976",
       "port-version": 0
+    },
+    "skse-plugin-info-ng": {
+      "baseline": "2023-10-10-1058237",
+      "port-version": 0
     }
   }
 }
