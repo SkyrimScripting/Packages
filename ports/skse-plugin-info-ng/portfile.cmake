@@ -10,6 +10,12 @@ vcpkg_cmake_configure(
 
 vcpkg_cmake_install()
 
+message(STATUS "Debug folder contents:")
+file(GLOB DEBUG_CONTENTS "${CURRENT_PACKAGES_DIR}/debug/*")
+foreach(item ${DEBUG_CONTENTS})
+    message(STATUS "   ${item}")
+endforeach()
+
 file(INSTALL "${CURRENT_PACKAGES_DIR}/debug/skse_plugin_info_ng.lib" DESTINATION "${CURRENT_PACKAGES_DIR}/debug/lib")
 file(REMOVE "${CURRENT_PACKAGES_DIR}/debug/skse_plugin_info_ng.lib")
 
