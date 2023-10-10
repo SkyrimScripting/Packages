@@ -1,6 +1,6 @@
 {
   "name": "skse-plugin-info-ng",
-  "version-string": "2023-10-10-4e2ba73",
+  "version-string": "2023-10-10-6d97d5d",
   "description": "vcpkg providing PluginInfo compatibility with CommonLibSSE-NG",
   "dependencies": [
     {
