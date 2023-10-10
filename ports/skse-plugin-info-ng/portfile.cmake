@@ -1,7 +1,7 @@
 vcpkg_from_git(
     OUT_SOURCE_PATH SOURCE_PATH
     URL https://github.com/SkyrimScripting/PluginInfoNG.git
-    REF f0dbf964c28065a2dccb087d7d248f24c17fc405
+    REF 4e2ba73594148e0e9f5c4efac79ddc4d2e472d0b
 )
 
 vcpkg_cmake_configure(
