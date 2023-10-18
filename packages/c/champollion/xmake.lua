@@ -1,5 +1,3 @@
-add_rules("mode.debug", "mode.release")
-
 package("champollion")
     set_homepage("https://github.com/Orvid/Champollion")
     set_description("A description for Champollion")
