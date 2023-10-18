@@ -1,7 +1,7 @@
 package("champollion")
     set_homepage("https://github.com/Orvid/Champollion")
     set_description("A description for Champollion")
-    add_urls("https://github.com/Orvid/Champollion")
+    add_urls("https://github.com/Orvid/Champollion.git")
     
     add_configs("standalone", { description = "Compile as a static library.", default = false, type = "boolean"})
 
