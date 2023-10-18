@@ -18,8 +18,6 @@ package("champollion")
         if package:config("standalone") then
             os.mv("$(package:installdir())/lib/cmake/Champollion", "$(package:installdir())/lib/cmake/ChampollionStatic")
         end
-
-        os.cp("$(package:installdir())/LICENSE", "$(package:installdir())/share/Champollion/copyright")
     end)
     
     on_test(function(package)
