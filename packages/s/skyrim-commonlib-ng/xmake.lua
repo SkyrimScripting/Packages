@@ -58,5 +58,5 @@ package("skyrim-commonlib-ng")
             SKSEPluginLoad(const SKSE::LoadInterface*) {
                 return true;
             };
-        ]]}, { configs = { languages = "c++latest" } }))
+        ]]}))
     end)
