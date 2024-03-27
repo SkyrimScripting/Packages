@@ -59,6 +59,7 @@ target("SkyrimCommonLibDefault")
     add_headerfiles(
         "include/(RE/**.h)",
         "include/(REL/**.h)",
+        "include/(REX/**.h)",
         "include/(SKSE/**.h)"
     )
 
