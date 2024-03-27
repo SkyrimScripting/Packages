@@ -3,7 +3,6 @@
 -- Original xmake configuration for CommonLibSSE-NG project by Qudix (https://github.com/Qudix)
 -- Modifications were made to the original code
 
-set_languages("c++20")
 set_arch("x64")
 
 set_warnings("allextra", "error")
