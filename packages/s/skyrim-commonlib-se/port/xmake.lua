@@ -15,7 +15,8 @@ option("xbyak")
     add_defines("SKSE_SUPPORT_XBYAK=1")
 option_end()
 
-add_requires("fmt", "rsm-binary-io", "vcpkg::boost-stl-interfaces")
+add_requires("rsm-binary-io", "vcpkg::boost-stl-interfaces")
+add_requires("fmt", { configs = { header_only = false } })
 add_requires("spdlog", { configs = { header_only = false, fmt_external = true } })
 
 if has_config("xbyak") then
