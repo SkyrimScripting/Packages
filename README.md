@@ -2,6 +2,20 @@
 
 > _Note: packages are only available thru xmake at this time_
 
+- [Skyrim Packages (`xmake` and `vcpkg`)](#skyrim-packages-xmake-and-vcpkg)
+  - [xmake](#xmake)
+  - [Packages](#packages)
+  - [CommonLib](#commonlib)
+    - [Basic Usage](#basic-usage)
+      - [`skyrim-commonlib`](#skyrim-commonlib)
+      - [`skyrim-commonlib-vr` (_or any other package_)](#skyrim-commonlib-vr-or-any-other-package)
+        - [`add_rules`](#add_rules)
+    - [Xbyak Support](#xbyak-support)
+    - [Mod Folder Deployment](#mod-folder-deployment)
+      - [`mods_folder`](#mods_folder)
+      - [`mod_files`](#mod_files)
+
+
 ## xmake
 
 To use these xmake packages, add the following to your `xmake.lua` file:
