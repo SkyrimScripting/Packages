@@ -1,9 +1,9 @@
-# Skyrim Packages (`xmake`)
+# Skyrim Packages
 
-- [Skyrim Packages (`xmake`)](#skyrim-packages-xmake)
-  - [CMake and vcpkg](#cmake-and-vcpkg)
-  - [xmake](#xmake)
-  - [Packages](#packages)
+- [Skyrim Packages](#skyrim-packages)
+- [xmake](#xmake)
+    - [Configure repository](#configure-repository)
+  - [Available Skyrim Packages](#available-skyrim-packages)
   - [CommonLib](#commonlib)
     - [Basic Usage](#basic-usage)
       - [`skyrim-commonlib`](#skyrim-commonlib)
@@ -15,11 +15,11 @@
       - [`mod_files`](#mod_files)
 
 
-## CMake and vcpkg
+> Note: I plan to add vcpkg support in the future, but for now, only xmake is supported for most packages.
 
-I plan to add vcpkg support in the future, but for now, only xmake is supported for most packages.
+# xmake
 
-## xmake
+### Configure repository
 
 To use these xmake packages, add the following to your `xmake.lua` file:
 
@@ -27,7 +27,7 @@ To use these xmake packages, add the following to your `xmake.lua` file:
 add_repositories("SkyrimScripting https://github.com/SkyrimScripting/Packages.git")
 ```
 
-## Packages
+## Available Skyrim Packages
 
 - `skyrim-commonlib`
 - `skyrim-commonlib-vr`
