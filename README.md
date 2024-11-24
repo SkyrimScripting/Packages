@@ -8,7 +8,7 @@
     - [Basic Usage](#basic-usage)
       - [`skyrim-commonlib`](#skyrim-commonlib)
       - [`skyrim-commonlib-vr` (_or any other package_)](#skyrim-commonlib-vr-or-any-other-package)
-        - [`add_rules`](#add_rules)
+    - [SKSE Plugin metadata](#skse-plugin-metadata)
     - [Xbyak Support](#xbyak-support)
     - [Mod Folder Deployment](#mod-folder-deployment)
       - [`mods_folder`](#mods_folder)
@@ -58,6 +58,31 @@ add_requires("skyrim-commonlib")
 target("My-SKSE-Plugin")
     add_files("plugin.cpp")
     add_packages("skyrim-commonlib")
+    add_rules("@skyrim-commonlib/plugin")
+```
+
+#### `skyrim-commonlib-vr` (_or any other package_)
+
+Or any of the other packages listed above:
+
+```lua
+-- For example, to use the VR version of CommonLib:
+add_requires("skyrim-commonlib-vr")
+
+target("My-SKSE-Plugin")
+    add_files("plugin.cpp")
+    -- This will add the CommonLibVR dependency
+    add_packages("skyrim-commonlib-vr")
+    -- And don't forget to add the rules for the plugin
+    add_rules("@skyrim-commonlib-vr/plugin")
+```
+
+### SKSE Plugin metadata
+
+```lua
+target("My-SKSE-Plugin")
+    add_files("plugin.cpp")
+    add_packages("skyrim-commonlib")
     add_rules("@skyrim-commonlib/plugin", {
         name = "My-SKSE-Plugin", -- This defaults to the target name
         version = "420.1.69", -- This defaults to the target version or "0.0.0"
@@ -67,28 +92,6 @@ target("My-SKSE-Plugin")
         mod_files = {"Scripts", "", "AnythingToDeployToTheModFolder"}
     })
 ```
-
-#### `skyrim-commonlib-vr` (_or any other package_)
-
-Or any of the other packages listed above:
-
-```lua
-add_requires("skyrim-commonlib-vr")
-
-target("My-SKSE-Plugin")
-    add_files("plugin.cpp")
-    add_packages("skyrim-commonlib-vr")
-```
-
-##### `add_rules`
-
-> The body of `add_rules` is optional, it is valid to simply:
->
-> ```lua
-> target("My-SKSE-Plugin")
->     add_files("plugin.cpp")
->     add_packages("skyrim-commonlib")
->     add_rules("@skyrim-commonlib/plugin")
 
 ### Xbyak Support
 
