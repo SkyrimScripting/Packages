@@ -10,7 +10,8 @@ package("skyrim-commonlib-ae")
 
     add_urls("https://github.com/powerof3/CommonLibSSE.git")
 
-    add_deps("skse_plugin_info", "fmt", "rsm-binary-io", "vcpkg::boost-stl-interfaces")
+    add_deps("skse_plugin_info", "rsm-binary-io", "vcpkg::boost-stl-interfaces")
+    add_deps("fmt", { configs = { header_only = false } })
     add_deps("spdlog", { configs = { header_only = false, fmt_external = true } })
 
     add_syslinks("version", "user32", "shell32", "ole32", "advapi32")

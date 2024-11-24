@@ -8,7 +8,8 @@ package("skyrim-commonlib-vr")
     set_description("A reverse engineered library for Skyrim Special Edition.")
     set_license("MIT")
 
-    add_deps("skse_plugin_info", "fmt", "rsm-binary-io", "vcpkg::boost-stl-interfaces")
+    add_deps("skse_plugin_info", "rsm-binary-io", "vcpkg::boost-stl-interfaces")
+    add_deps("fmt", { configs = { header_only = false } })
     add_deps("spdlog", { configs = { header_only = false, fmt_external = true } })
 
     add_syslinks("version", "user32", "shell32", "ole32", "advapi32")
