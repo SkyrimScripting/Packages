@@ -264,15 +264,15 @@ after_build(function(target)
                 -- Else it is a folder, copy it:
             elseif os.isdir(mod_file) then
                 local mod_folder_target = path.join(mod_folder, path.filename(mod_file))
+                print("Copying " .. mod_file .. " to " .. mod_folder_target)
 
                 if not os.isdir(mod_folder_target) then
                     os.mkdir(mod_folder_target)
                 end
 
-                for _, file in ipairs(os.files(mod_file)) do
+                for _, file in ipairs(os.files(path.join(mod_file, "*"))) do
                     local source_file = file
                     local target_file = path.join(mod_folder_target, path.filename(file))
-                    print("Copying " .. source_file .. " to " .. target_file)
                     if os.isdir(source_file) then
                         os.cp(source_file, target_file)
                     else
