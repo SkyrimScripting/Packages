@@ -1,8 +1,7 @@
-# Skyrim Packages (`xmake` and `vcpkg`)
+# Skyrim Packages (`xmake`)
 
-> _Note: packages are only available thru xmake at this time_
-
-- [Skyrim Packages (`xmake` and `vcpkg`)](#skyrim-packages-xmake-and-vcpkg)
+- [Skyrim Packages (`xmake`)](#skyrim-packages-xmake)
+  - [CMake and vcpkg](#cmake-and-vcpkg)
   - [xmake](#xmake)
   - [Packages](#packages)
   - [CommonLib](#commonlib)
@@ -15,6 +14,10 @@
       - [`mods_folder`](#mods_folder)
       - [`mod_files`](#mod_files)
 
+
+## CMake and vcpkg
+
+I plan to add vcpkg support in the future, but for now, only xmake is supported for most packages.
 
 ## xmake
 
