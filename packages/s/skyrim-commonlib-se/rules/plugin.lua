@@ -148,7 +148,7 @@ rule("plugin")
                 os.cp(pdb, output_folder)
             end
         end
-        
+
         -- Split string into a table by a delimiter
         function split(str, delim)
             local result = {}
@@ -227,6 +227,23 @@ rule("plugin")
 
                     -- Copy new files to output fulder
                     os.cp(mod_file, mod_file_target_dir)
+            elseif os.isdir(mod_file) then
+                local mod_folder_target = path.join(mod_folder, path.filename(mod_file))
+                print("Copying " .. mod_file .. " to " .. mod_folder_target)
+
+                if not os.isdir(mod_folder_target) then
+                    os.mkdir(mod_folder_target)
+                end
+
+                for _, file in ipairs(os.files(path.join(mod_file, "*"))) do
+                    local source_file = file
+                    local target_file = path.join(mod_folder_target, path.filename(file))
+                    if os.isdir(source_file) then
+                        os.cp(source_file, target_file)
+                    else
+                        os.cp(source_file, mod_folder_target)
+                    end
+                end
                 else
                     print("File not found: " .. mod_file)
                 end

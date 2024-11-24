@@ -47,7 +47,7 @@ on_config(function(target)
     local version_string = string.format("%s.%s.%s", version:major(), version:minor(), version:patch())
 
     local product_version = semver.new(config.product_version or project.version() or config.version or target:version() or
-    "0.0.0")
+        "0.0.0")
     local product_version_string = string.format("%s.%s.%s", product_version:major(), product_version:minor(),
         product_version:patch())
 
@@ -131,7 +131,7 @@ on_config(function(target)
             file:print("    const char* GetAuthorName() { return \"" .. author_name .. "\"; }")
             file:print("    const char* GetAuthorEmail() { return \"" .. author_email .. "\"; }")
             file:print("    const REL::Version GetPluginVersion() { return REL::Version{" ..
-            version:major() .. ", " .. version:minor() .. ", " .. version:patch() .. "}; }")
+                version:major() .. ", " .. version:minor() .. ", " .. version:patch() .. "}; }")
             file:print("}")
             file:print("")
             file:close()
@@ -195,17 +195,17 @@ after_build(function(target)
         set[value] = true
     end
 
-    local all_folders_set = {}     -- "set" to store unique folder paths
+    local all_folders_set = {} -- "set" to store unique folder paths
     local mod_names = { "mod_folder", "mods_folder", "mods_folders", "mod_folders" }
 
     for _, mod_name in ipairs(mod_names) do
-        local mod_value = config[mod_name]     -- This could be a table or a string
+        local mod_value = config[mod_name] -- This could be a table or a string
         if mod_value then
             if type(mod_value) == "table" then
                 for _, entry in ipairs(mod_value) do
                     -- split by semicolons
                     for _, item in ipairs(split(entry, ";")) do
-                        if item ~= "" then     -- No empty strings
+                        if item ~= "" then -- No empty strings
                             addToSet(all_folders_set, item)
                         end
                     end
@@ -261,7 +261,6 @@ after_build(function(target)
                 print("Copying " .. mod_file .. " to " .. mod_file_target_dir)
                 os.cp(mod_file, mod_file_target_dir)
 
-                -- Else it is a folder, copy it:
             elseif os.isdir(mod_file) then
                 local mod_folder_target = path.join(mod_folder, path.filename(mod_file))
                 print("Copying " .. mod_file .. " to " .. mod_folder_target)
