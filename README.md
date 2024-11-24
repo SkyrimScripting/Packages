@@ -31,6 +31,8 @@ add_repositories("SkyrimScripting https://github.com/SkyrimScripting/Packages.gi
 
 ### Basic Usage
 
+#### `skyrim-commonlib`
+
 To use one of these CommonLib packages:
 
 ```lua
@@ -39,7 +41,17 @@ add_requires("skyrim-commonlib")
 target("My-SKSE-Plugin")
     add_files("plugin.cpp")
     add_packages("skyrim-commonlib")
+    add_rules("@skyrim-commonlib/plugin", {
+        name = "My-SKSE-Plugin", -- This defaults to the target name
+        version = "420.1.69", -- This defaults to the target version or "0.0.0"
+        author = "Mrowr Purr",
+        email = "mrowr.purr@gmail.com",
+        mods_folder = os.getenv("MO2_or_VORTEX_mods_folder_path"),
+        mod_files = {"Scripts", "", "AnythingToDeployToTheModFolder"}
+    })
 ```
+
+#### `skyrim-commonlib-vr` (_or any other package_)
 
 Or any of the other packages listed above:
 
@@ -50,6 +62,16 @@ target("My-SKSE-Plugin")
     add_files("plugin.cpp")
     add_packages("skyrim-commonlib-vr")
 ```
+
+##### `add_rules`
+
+> The body of `add_rules` is optional, it is valid to simply:
+>
+> ```lua
+> target("My-SKSE-Plugin")
+>     add_files("plugin.cpp")
+>     add_packages("skyrim-commonlib")
+>     add_rules("@skyrim-commonlib/plugin")
 
 ### Xbyak Support
 
@@ -67,7 +89,9 @@ SKSE::Trampoline::allocate(Xbyak::CodeGenerator& codeGenerator)
 
 ### Mod Folder Deployment
 
-Optionall, you can define one or more "mods" folders to deploy the plugin dll/pdb to:
+#### `mods_folder`
+
+Optionally, you can define one or more "mods" folders to deploy the plugin dll/pdb to:
 
 ```lua
 add_requires("skyrim-commonlib")
@@ -116,10 +140,25 @@ target("My-SKSE-Plugin")
     })
 ```
 
-> _xmake configuration based on official CommonLibSSE-NG xmake package configuration:_  
-> _https://github.com/xmake-io/xmake-repo_  
-> _License: Apache 2.0_  
-> 
-> _Configuration above was authored by by Qudix (https://github.com/Qudix)_  
+#### `mod_files`
+
+You can also specify additional files to deploy to the mod folder:
+
+```lua
+add_requires("skyrim-commonlib")
+
+target("My-SKSE-Plugin")
+    add_files("plugin.cpp")
+    add_packages("skyrim-commonlib")
+    add_rules("@skyrim-commonlib/plugin", {
+        mod_files = { "Scripts", "", "AnythingToDeployToTheModFolder" }
+    })
+```
+
+> _xmake configuration based on official CommonLibSSE-NG xmake package configuration:_
+> _https://github.com/xmake-io/xmake-repo_
+> _License: Apache 2.0_
+>
+> _Configuration above was authored by by Qudix (https://github.com/Qudix)_
 >
 > _Modifications were made to the original code_
