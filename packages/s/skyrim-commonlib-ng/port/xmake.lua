@@ -4,7 +4,7 @@
 -- Modifications were made to the original code
 
 set_arch("x64")
-set_languages("c++20")
+set_languages("c++latest")
 
 set_warnings("allextra", "error")
 set_optimize("faster")
