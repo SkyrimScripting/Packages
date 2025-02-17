@@ -20,6 +20,7 @@ rule("plugin")
 
         target:set("kind", "shared")
         target:set("arch", "x64")
+        target:set("languages", "c++23")
 
         local config = target:extraconf("rules", "@skyrim-commonlib-ng/plugin")
 
@@ -135,8 +136,8 @@ rule("plugin")
         target:add("files", version_file)
         target:add("files", plugin_file)
 
-        target:add("cxxflags", "/permissive-", "/Zc:alignedNew", "/Zc:__cplusplus", "/Zc:forScope", "/Zc:ternary")
-        target:add("cxxflags", "cl::/Zc:externConstexpr", "cl::/Zc:hiddenFriend", "cl::/Zc:preprocessor", "cl::/Zc:referenceBinding")
+        -- target:add("cxxflags", "/permissive-", "/Zc:alignedNew", "/Zc:__cplusplus", "/Zc:forScope", "/Zc:ternary")
+        -- target:add("cxxflags", "cl::/Zc:externConstexpr", "cl::/Zc:hiddenFriend", "cl::/Zc:preprocessor", "cl::/Zc:referenceBinding")
     end)
 
     after_build(function(target)
