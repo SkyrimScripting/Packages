@@ -12,9 +12,9 @@ package("skyrim-commonlib-ng")
              "https://github.com/CharmedBaryon/CommonLibSSE-NG.git")
 
     add_configs("xbyak", {description = "Enable trampoline support for Xbyak", default = false, type = "boolean"})
-    add_configs("se", {description = "Enable runtime support for Skyrim SE", default = true, type = "boolean"})
+    add_configs("se", {description = "Enable runtime support for Skyrim SE", default = false, type = "boolean"})
     add_configs("ae", {description = "Enable runtime support for Skyrim AE", default = true, type = "boolean"})
-    add_configs("vr", {description = "Enable runtime support for Skyrim VR", default = true, type = "boolean"})
+    add_configs("vr", {description = "Enable runtime support for Skyrim VR", default = false, type = "boolean"})
 
     add_deps("skse_plugin_info", "rapidcsv")
     add_deps("spdlog", { configs = { header_only = false, wchar = true, std_format = true } })
