@@ -238,13 +238,17 @@ rule("plugin")
                 for _, file in ipairs(os.files(path.join(mod_file, "*"))) do
                     local source_file = file
                     local target_file = path.join(mod_folder_target, path.filename(file))
-                    if os.isdir(source_file) then
-                        os.cp(source_file, target_file)
-                    else
-                        os.cp(source_file, mod_folder_target)
-                    end
+                    print("Copying file: " .. source_file .. " to " .. mod_folder_target)
+                    os.cp(source_file, mod_folder_target)
                 end
-                else
+
+                for _, dir in ipairs(os.dirs(path.join(mod_file, "*"))) do
+                    local source_dir = dir
+                    local target_dir = path.join(mod_folder_target, path.filename(dir))
+                    print("Copying directory: " .. source_dir .. " to " .. target_dir)
+                    os.cp(source_dir, target_dir)
+                end
+            else
                     print("File not found: " .. mod_file)
                 end
             end
