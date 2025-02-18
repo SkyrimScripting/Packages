@@ -205,31 +205,30 @@ rule("plugin")
             table.insert(mod_files, pdb)
         end
 
-        for _, mods_folder in ipairs(mod_folders) do
-            local mod_folder = path.join(mods_folder, mod_name)
-            for _, mod_file in ipairs(mod_files) do
-                if os.isfile(mod_file) then
-                    local mod_file_target = path.join(mod_folder, path.filename(mod_file))
+    for _, mods_folder in ipairs(mod_folders) do
+        local mod_folder = path.join(mods_folder, mod_name)
+        for _, mod_file in ipairs(mod_files) do
+            if os.isfile(mod_file) then
+                local mod_file_target = path.join(mod_folder, path.filename(mod_file))
 
-                    if mod_file == dll then
-                        mod_file_target = path.join(mod_folder, "SKSE", "Plugins", path.filename(mod_file))
-                    elseif mod_file == pdb then
-                        mod_file_target = path.join(mod_folder, "SKSE", "Plugins", path.filename(mod_file))
-                    end
+                if mod_file == dll then
+                    mod_file_target = path.join(mod_folder, "SKSE", "Plugins", path.filename(mod_file))
+                elseif mod_file == pdb then
+                    mod_file_target = path.join(mod_folder, "SKSE", "Plugins", path.filename(mod_file))
+                end
 
-                    local mod_file_target_dir = path.directory(mod_file_target)
-                    if not os.isdir(mod_file_target_dir) then
-                        os.mkdir(mod_file_target_dir)
-                    end
+                local mod_file_target_dir = path.directory(mod_file_target)
+                if not os.isdir(mod_file_target_dir) then
+                    os.mkdir(mod_file_target_dir)
+                end
 
-                    -- Clean up previous files in the output folder
-                    if os.isfile(mod_file_target) then
-                        os.rm(mod_file_target)
-                    end
+                -- Clean up previous files in the output folder
+                if os.isfile(mod_file_target) then
+                    os.rm(mod_file_target)
+                end
 
-                    -- Copy new files to output fulder
-                    os.cp(mod_file, mod_file_target_dir)
-
+                -- Copy new files to output fulder
+                os.cp(mod_file, mod_file_target_dir)
             elseif os.isdir(mod_file) then
                 local mod_folder_target = path.join(mod_folder, path.filename(mod_file))
                 print("Copying " .. mod_file .. " to " .. mod_folder_target)
@@ -241,6 +240,13 @@ rule("plugin")
                 for _, file in ipairs(os.files(path.join(mod_file, "*"))) do
                     local source_file = file
                     local target_file = path.join(mod_folder_target, path.filename(file))
+
+                    -- Does it exist already? If so, delete it first:
+                    if os.isfile(target_file) then
+                        print("Deleting file: " .. target_file)
+                        os.rm(target_file)
+                    end
+
                     print("Copying file: " .. source_file .. " to " .. mod_folder_target)
                     os.cp(source_file, mod_folder_target)
                 end
@@ -248,12 +254,19 @@ rule("plugin")
                 for _, dir in ipairs(os.dirs(path.join(mod_file, "*"))) do
                     local source_dir = dir
                     local target_dir = path.join(mod_folder_target, path.filename(dir))
+
+                    -- Does it exist already? If so, delete it first:
+                    if os.isdir(target_dir) then
+                        print("Deleting directory: " .. target_dir)
+                        os.rmdir(target_dir)
+                    end
+
                     print("Copying directory: " .. source_dir .. " to " .. target_dir)
                     os.cp(source_dir, target_dir)
                 end
             else
-                    print("File not found: " .. mod_file)
-                end
+                print("File not found: " .. mod_file)
             end
         end
-    end)
+    end
+end)

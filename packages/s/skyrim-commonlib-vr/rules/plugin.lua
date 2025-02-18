@@ -236,28 +236,42 @@ after_build(function(target)
 
                 -- Copy new files to output fulder
                 os.cp(mod_file, mod_file_target_dir)
-        elseif os.isdir(mod_file) then
-            local mod_folder_target = path.join(mod_folder, path.filename(mod_file))
-            print("Copying " .. mod_file .. " to " .. mod_folder_target)
+            elseif os.isdir(mod_file) then
+                local mod_folder_target = path.join(mod_folder, path.filename(mod_file))
+                print("Copying " .. mod_file .. " to " .. mod_folder_target)
 
-            if not os.isdir(mod_folder_target) then
-                os.mkdir(mod_folder_target)
-            end
+                if not os.isdir(mod_folder_target) then
+                    os.mkdir(mod_folder_target)
+                end
 
-            for _, file in ipairs(os.files(path.join(mod_file, "*"))) do
-                local source_file = file
-                local target_file = path.join(mod_folder_target, path.filename(file))
-                print("Copying file: " .. source_file .. " to " .. mod_folder_target)
-                os.cp(source_file, mod_folder_target)
-            end
+                for _, file in ipairs(os.files(path.join(mod_file, "*"))) do
+                    local source_file = file
+                    local target_file = path.join(mod_folder_target, path.filename(file))
 
-            for _, dir in ipairs(os.dirs(path.join(mod_file, "*"))) do
-                local source_dir = dir
-                local target_dir = path.join(mod_folder_target, path.filename(dir))
-                print("Copying directory: " .. source_dir .. " to " .. target_dir)
-                os.cp(source_dir, target_dir)
-            end
-        else
+                    -- Does it exist already? If so, delete it first:
+                    if os.isfile(target_file) then
+                        print("Deleting file: " .. target_file)
+                        os.rm(target_file)
+                    end
+
+                    print("Copying file: " .. source_file .. " to " .. mod_folder_target)
+                    os.cp(source_file, mod_folder_target)
+                end
+
+                for _, dir in ipairs(os.dirs(path.join(mod_file, "*"))) do
+                    local source_dir = dir
+                    local target_dir = path.join(mod_folder_target, path.filename(dir))
+
+                    -- Does it exist already? If so, delete it first:
+                    if os.isdir(target_dir) then
+                        print("Deleting directory: " .. target_dir)
+                        os.rmdir(target_dir)
+                    end
+
+                    print("Copying directory: " .. source_dir .. " to " .. target_dir)
+                    os.cp(source_dir, target_dir)
+                end
+            else
                 print("File not found: " .. mod_file)
             end
         end
