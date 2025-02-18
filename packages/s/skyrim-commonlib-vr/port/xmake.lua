@@ -53,6 +53,7 @@ target("SkyrimCommonLibVR")
         "include/csv.h",
         "include/(RE/**.h)",
         "include/(REL/**.h)",
+        "include/(REX/**.h)",
         "include/(SKSE/**.h)",
         "extern/openvr/headers/(**.h)"
     )
