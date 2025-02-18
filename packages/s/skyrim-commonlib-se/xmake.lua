@@ -14,7 +14,7 @@ package("skyrim-commonlib-se")
     add_deps("fmt", { configs = { header_only = false } })
     add_deps("spdlog", { configs = { header_only = false, fmt_external = true } })
 
-    add_syslinks("version", "user32", "shell32", "ole32", "advapi32")
+    add_syslinks("version", "user32", "shell32", "ole32", "advapi32", "bcrypt", "d3d11", "d3dcompiler", "dbghelp", "dxgi")
 
     add_configs("xbyak", {description = "Enable trampoline support for Xbyak", default = false, type = "boolean"})
 

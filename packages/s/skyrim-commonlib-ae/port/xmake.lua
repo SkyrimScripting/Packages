@@ -41,7 +41,7 @@ target("SkyrimCommonLibAE")
         "UNICODE", "_UNICODE"
     )
 
-    add_syslinks("version", "user32", "shell32", "ole32", "advapi32")
+    add_syslinks("version", "user32", "shell32", "ole32", "advapi32", "bcrypt", "d3d11", "d3dcompiler", "dbghelp", "dxgi")
 
     add_files("src/**.cpp")
 
