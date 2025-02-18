@@ -242,8 +242,10 @@ rule("plugin")
                     local source_file = file
                     local target_file = path.join(mod_folder_target, path.filename(file))
                     if os.isdir(source_file) then
+                        print("Copying directory: " .. source_file .. " to " .. target_file)
                         os.cp(source_file, target_file)
                     else
+                        print("Copying file: " .. source_file .. " to " .. mod_folder_target)
                         os.cp(source_file, mod_folder_target)
                     end
                 end
