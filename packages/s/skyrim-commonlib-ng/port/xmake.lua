@@ -9,6 +9,7 @@ set_project("CommonLibSSE")
 
 set_arch("x64")
 set_languages("c++23")
+add_cxxflags("/Zc:__cplusplus")
 set_warnings("allextra")
 set_encodings("utf-8")
 set_optimize("faster")
