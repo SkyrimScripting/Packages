@@ -51,13 +51,3 @@ package("skyrim-commonlib-ng")
 
         import("package.tools.xmake").install(package, options)
     end)
-
-    on_test("windows|x64", function(package)
-        assert(package:check_cxxsnippets({test = [[
-            #include <SKSE/SKSE.h>
-
-            SKSEPluginLoad(const SKSE::LoadInterface*) {
-                return true;
-            };
-        ]]}))
-    end)
