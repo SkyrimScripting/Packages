@@ -8,7 +8,7 @@ set_xmakever("2.8.2")
 set_project("CommonLibSSE")
 
 set_arch("x64")
-set_languages("c++23")
+set_languages("cxxlatest")
 add_cxxflags("/Zc:__cplusplus")
 set_warnings("allextra")
 set_encodings("utf-8")

@@ -20,7 +20,7 @@ rule("plugin")
 
         target:set("kind", "shared")
         target:set("arch", "x64")
-        target:set("languages", "c++23")
+        target:set("languages", "cxxlatest")
         target:add("cxxflags", "/Zc:__cplusplus")
 
         local config = target:extraconf("rules", "@skyrim-commonlib-ng/plugin")
