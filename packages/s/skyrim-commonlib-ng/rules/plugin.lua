@@ -153,6 +153,11 @@ after_build(function(target)
         return result
     end
 
+    -- add unique items to a "set"
+    function addToSet(set, value)
+        set[value] = true
+    end
+
     -- Use `game_version` in the extraconf call:
     local config = target:extraconf("rules", "@skyrim-commonlib-" .. game_version .. "/plugin")
 
