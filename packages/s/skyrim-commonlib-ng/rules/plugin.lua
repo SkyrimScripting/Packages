@@ -141,139 +141,109 @@ rule("plugin")
         -- target:add("cxxflags", "cl::/Zc:externConstexpr", "cl::/Zc:hiddenFriend", "cl::/Zc:preprocessor", "cl::/Zc:referenceBinding")
     end)
 
-    after_build(function(target)
-        local config = target:extraconf("rules", "@skyrim-commonlib-ng/plugin")
+after_build(function(target)
+    local game_version = "ng"
 
-        local output_folders = config.output_folders or {}
+    import("core.base.table")
 
-        if config.output_folder then
-            table.insert(output_folders, config.output_folder)
-        end
+    -- Use `game_version` in the extraconf call:
+    local config = target:extraconf("rules", "@skyrim-commonlib-" .. game_version .. "/plugin")
 
-        local dll = target:targetfile()
-        local pdb = dll:gsub("%.dll$", ".pdb")
+    local dll = target:targetfile()
+    local pdb = dll:gsub("%.dll$", ".pdb")
 
-        for _, output_folder in ipairs(output_folders) do
-            local dll_target = path.join(output_folder, path.filename(dll))
-            local pdb_target = path.join(output_folder, path.filename(pdb))
+    -- copy config.mod_files to avoid mutation
+    local base_mod_files = config.mod_files or {}
+    local mod_files = {}
+    for _, file in ipairs(base_mod_files) do
+        table.insert(mod_files, file)
+    end
+    table.insert(mod_files, dll)
+    if os.isfile(pdb) then
+        table.insert(mod_files, pdb)
+    end
 
-            -- Clean up previous files in the output folder
-            if os.isfile(dll_target) then
-                os.rm(dll_target)
-            end
-            if os.isfile(pdb_target) then
-                os.rm(pdb_target)
-            end
+    -- Now do your copying logic
+    local all_folders_set = {}
+    local mod_names = { "mod_folder", "mods_folder", "mods_folders", "mod_folders" }
 
-            if not os.isdir(output_folder) then
-                os.mkdir(output_folder)
-            end
-
-            -- Copy new files to output fulder
-            os.cp(dll, output_folder)
-            if os.isfile(pdb) then
-                os.cp(pdb, output_folder)
-            end
-        end
-
-        -- Split string into a table by a delimiter
-        function split(str, delim)
-            local result = {}
-            for match in (str .. delim):gmatch("(.-)" .. delim) do
-                table.insert(result, match)
-            end
-            return result
-        end
-
-        -- add unique items to a "set"
-        function addToSet(set, value)
-            set[value] = true
-        end
-
-        local all_folders_set = {}  -- "set" to store unique folder paths
-        local mod_names = {"mod_folder", "mods_folder", "mods_folders", "mod_folders"}
-
-        for _, mod_name in ipairs(mod_names) do
-            local mod_value = config[mod_name]  -- This could be a table or a string
-            if mod_value then
-                if type(mod_value) == "table" then
-                    for _, entry in ipairs(mod_value) do
-                        -- split by semicolons
-                        for _, item in ipairs(split(entry, ";")) do
-                            if item ~= "" then  -- No empty strings
-                                addToSet(all_folders_set, item)
-                            end
-                        end
-                    end
-                elseif type(mod_value) == "string" then
-                    -- split by semicolons
-                    for _, item in ipairs(split(mod_value, ";")) do
+    for _, mod_name in ipairs(mod_names) do
+        local mod_value = config[mod_name]
+        if mod_value then
+            if type(mod_value) == "table" then
+                for _, entry in ipairs(mod_value) do
+                    for _, item in ipairs(split(entry, ";")) do
                         if item ~= "" then
                             addToSet(all_folders_set, item)
                         end
                     end
                 end
+            elseif type(mod_value) == "string" then
+                for _, item in ipairs(split(mod_value, ";")) do
+                    if item ~= "" then
+                        addToSet(all_folders_set, item)
+                    end
+                end
             end
         end
+    end
 
-        -- Convert set to table
-        local mod_folders = {}
-        for k in pairs(all_folders_set) do
-            table.insert(mod_folders, k)
-        end
+    local mod_folders = {}
+    for folder in pairs(all_folders_set) do
+        table.insert(mod_folders, folder)
+    end
 
-        local mod_name = config.mod_name or config.name or target:name()
-        local mod_files = config.mod_files or {}
+    local mod_name = config.mod_name or config.name or target:name()
 
-        table.insert(mod_files, dll)
-        if os.isfile(pdb) then
-            table.insert(mod_files, pdb)
-        end
+    for _, mods_folder in ipairs(mod_folders) do
+        local mod_folder = path.join(mods_folder, mod_name)
+        for _, mod_file in ipairs(mod_files) do
+            if os.isfile(mod_file) then
+                local mod_file_target = path.join(mod_folder, path.filename(mod_file))
+                if mod_file == dll or mod_file == pdb then
+                    mod_file_target = path.join(mod_folder, "SKSE", "Plugins", path.filename(mod_file))
+                end
 
-        for _, mods_folder in ipairs(mod_folders) do
-            local mod_folder = path.join(mods_folder, mod_name)
-            for _, mod_file in ipairs(mod_files) do
-                if os.isfile(mod_file) then
-                    local mod_file_target = path.join(mod_folder, path.filename(mod_file))
+                local mod_file_target_dir = path.directory(mod_file_target)
+                if not os.isdir(mod_file_target_dir) then
+                    os.mkdir(mod_file_target_dir)
+                end
 
-                    if mod_file == dll then
-                        mod_file_target = path.join(mod_folder, "SKSE", "Plugins", path.filename(mod_file))
-                    elseif mod_file == pdb then
-                        mod_file_target = path.join(mod_folder, "SKSE", "Plugins", path.filename(mod_file))
-                    end
+                if os.isfile(mod_file_target) then
+                    os.rm(mod_file_target)
+                end
+                os.cp(mod_file, mod_file_target_dir)
 
-                    local mod_file_target_dir = path.directory(mod_file_target)
-                    if not os.isdir(mod_file_target_dir) then
-                        os.mkdir(mod_file_target_dir)
-                    end
-
-                    -- Clean up previous files in the output folder
-                    if os.isfile(mod_file_target) then
-                        os.rm(mod_file_target)
-                    end
-
-                    -- Copy new files to output fulder
-                    os.cp(mod_file, mod_file_target_dir)
             elseif os.isdir(mod_file) then
                 local mod_folder_target = path.join(mod_folder, path.filename(mod_file))
-                print("Copying " .. mod_file .. " to " .. mod_folder_target)
+                print("[" .. game_version .. "] Copying directory " .. mod_file .. " to " .. mod_folder_target)
 
                 if not os.isdir(mod_folder_target) then
                     os.mkdir(mod_folder_target)
                 end
 
                 for _, file in ipairs(os.files(path.join(mod_file, "*"))) do
-                    local source_file = file
                     local target_file = path.join(mod_folder_target, path.filename(file))
-                    if os.isdir(source_file) then
-                        os.cp(source_file, target_file)
-                    else
-                        os.cp(source_file, mod_folder_target)
+                    if os.isfile(target_file) then
+                        print("Deleting file: " .. target_file)
+                        os.rm(target_file)
                     end
+                    print("Copying file: " .. file .. " to " .. mod_folder_target)
+                    os.cp(file, mod_folder_target)
                 end
-                else
-                    print("File not found: " .. mod_file)
+
+                for _, dir in ipairs(os.dirs(path.join(mod_file, "*"))) do
+                    local target_dir = path.join(mod_folder_target, path.filename(dir))
+                    if os.isdir(target_dir) then
+                        print("Deleting directory: " .. target_dir)
+                        os.rmdir(target_dir)
+                    end
+                    print("Copying directory: " .. dir .. " to " .. target_dir)
+                    os.cp(dir, target_dir)
                 end
+            else
+                print("[" .. game_version .. "] File or directory not found: " .. mod_file)
             end
         end
-    end)
+    end
+end)
