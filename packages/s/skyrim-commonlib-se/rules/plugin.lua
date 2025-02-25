@@ -117,8 +117,6 @@ rule("plugin")
 after_build(function(target)
     local game_version = "se"
 
-    import("core.base.table")
-
     -- Use `game_version` in the extraconf call:
     local config = target:extraconf("rules", "@skyrim-commonlib-" .. game_version .. "/plugin")
 
