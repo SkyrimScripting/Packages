@@ -117,6 +117,15 @@ rule("plugin")
 after_build(function(target)
     local game_version = "se"
 
+    -- Split string into a table by a delimiter
+    function split(str, delim)
+        local result = {}
+        for match in (str .. delim):gmatch("(.-)" .. delim) do
+            table.insert(result, match)
+        end
+        return result
+    end
+
     -- Use `game_version` in the extraconf call:
     local config = target:extraconf("rules", "@skyrim-commonlib-" .. game_version .. "/plugin")
 
