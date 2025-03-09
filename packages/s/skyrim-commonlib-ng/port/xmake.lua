@@ -55,7 +55,7 @@ target("SkyrimCommonLibNG")
     add_packages("fmt", "spdlog")
 
     if has_config("vr") then
-        add_requires("rapidcsv")
+        add_packages("rapidcsv")
     end
 
     if has_config("xbyak") then

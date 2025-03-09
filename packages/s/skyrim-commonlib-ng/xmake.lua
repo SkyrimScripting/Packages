@@ -31,6 +31,7 @@ package("skyrim-commonlib-ng")
         end
         if package:config("vr") then
             package:add("defines", "ENABLE_SKYRIM_VR=1")
+            package:add("deps", "rapidcsv")
         end
         if package:config("xbyak") then
             package:add("defines", "SKSE_SUPPORT_XBYAK=1")
