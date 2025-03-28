@@ -25,22 +25,6 @@ rule("plugin")
 
         local config = target:extraconf("rules", "@skyrim-commonlib-ng/plugin")
 
-        if config.ae ~= false then
-            target:add("defines", "ENABLE_SKYRIM_AE=1")
-        end
-
-        if config.se ~= false then
-            target:add("defines", "ENABLE_SKYRIM_SE=1")
-        end
-
-        if config.vr ~= false then
-            target:add("defines", "ENABLE_SKYRIM_VR=1")
-        end
-
-        if config.xbyak then
-            target:add("defines", "SKSE_SUPPORT_XBYAK=1")
-        end
-
         local plugin_name = config.name or target:name()
         local author_name = config.author or ""
         local author_email = config.email or ""
