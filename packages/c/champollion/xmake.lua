@@ -4,15 +4,16 @@ package("champollion")
     add_urls("https://github.com/mrowrpurr/Champollion.git")
     add_versions("mrowrpurr", "mrowrpurr")
     on_install(function(package)
-        local configs = {
-            "-DCHAMPOLLION_STATIC_LIBRARY=ON",
-            "-DCMAKE_TOOLCHAIN_FILE=",
-            "-DVCPKG_MANIFEST_MODE=OFF",
-        }
-        if package:debug() then
-            table.insert(configs, "-DCMAKE_BUILD_TYPE=Debug")
-        else
-            table.insert(configs, "-DCMAKE_BUILD_TYPE=Release")
-        end
-        import("package.tools.cmake").install(package, configs, {envs = {VCPKG_ROOT = ""}})
+        io.writefile("xmake.lua", [[
+            set_languages("c++17")
+            target("champollion")
+                set_kind("static")
+                add_files("Pex/*.cpp", "Decompiler/*.cpp", "Decompiler/Node/*.cpp")
+                add_includedirs(".", {public = true})
+                add_headerfiles("Pex/*.hpp", {prefixdir = "Champollion/Pex"})
+                add_headerfiles("Decompiler/*.hpp", {prefixdir = "Champollion/Decompiler"})
+                add_headerfiles("Decompiler/Node/*.hpp", {prefixdir = "Champollion/Decompiler/Node"})
+                add_defines("_CRT_SECURE_NO_WARNINGS")
+        ]])
+        import("package.tools.xmake").install(package)
     end)
