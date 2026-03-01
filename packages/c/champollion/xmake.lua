@@ -1,22 +1,14 @@
 package("champollion")
-    set_homepage("https://github.com/mrowrpurr/Champollion")
+    set_homepage("https://github.com/SkyrimScriptingBeta/Champollion")
     set_description("A PEX to Papyrus Decompiler for Skyrim, Fallout 4 and Starfield")
-    add_urls("https://github.com/mrowrpurr/Champollion.git")
+    add_urls("https://github.com/SkyrimScriptingBeta/Champollion.git")
     add_versions("mrowrpurr", "mrowrpurr")
-    add_deps("boost")
     on_install(function(package)
-        io.writefile("xmake.lua", [[
-            add_requires("boost")
-            set_languages("c++17")
-            target("champollion")
-                set_kind("static")
-                add_files("Pex/*.cpp", "Decompiler/*.cpp", "Decompiler/Node/*.cpp")
-                add_includedirs(".", {public = true})
-                add_headerfiles("Pex/*.hpp", {prefixdir = "Champollion/Pex"})
-                add_headerfiles("Decompiler/*.hpp", {prefixdir = "Champollion/Decompiler"})
-                add_headerfiles("Decompiler/Node/*.hpp", {prefixdir = "Champollion/Decompiler/Node"})
-                add_defines("_CRT_SECURE_NO_WARNINGS")
-                add_packages("boost")
-        ]])
-        import("package.tools.xmake").install(package)
+        local configs = {"-DCHAMPOLLION_STATIC_LIBRARY=ON"}
+        if package:debug() then
+            table.insert(configs, "-DCMAKE_BUILD_TYPE=Debug")
+        else
+            table.insert(configs, "-DCMAKE_BUILD_TYPE=Release")
+        end
+        import("package.tools.cmake").install(package, configs)
     end)
